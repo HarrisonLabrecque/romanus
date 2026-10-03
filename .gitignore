@@ -1,0 +1,19 @@
+# Python virtual environment
+romanus/
+
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# IDE files
+.vscode/
+.idea/
+
+# Environment variables
+.env
+
+# Build / distribution
+build/
+dist/
+*.spec

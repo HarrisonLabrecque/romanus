@@ -2,16 +2,17 @@
 """
 Romanus - Latin Alphabet Reference Data
 
-This module contains reference information about the
-23-letter classical Latin alphabet.
+Contains reference information about the modern
+26-letter Latin alphabet, including pronunciation,
+historical origins, and letter descriptions.
 
-The data is separated from the PySide6 interface so
-it can be reused throughout the application.
+The classical Latin alphabet originally contained
+23 letters. J, U, and W developed later.
 
-Version: 0.2.0
+Version: 0.6.0
 """
 
-# Classical Latin alphabet reference data.
+# Modern 26-letter Latin alphabet reference data.
 LATIN_ALPHABET = [
     {
         "uppercase": "A",
@@ -74,7 +75,17 @@ LATIN_ALPHABET = [
         "lowercase": "i",
         "name": "I",
         "pronunciation": "i / j",
-        "description": "Used for both vowel and consonantal sounds."
+        "description": "Historically represented both vowel and consonantal sounds."
+    },
+    {
+        "uppercase": "J",
+        "lowercase": "j",
+        "name": "J",
+        "pronunciation": "dʒ / j",
+        "description": (
+            "Developed from the letter I. It became a "
+            "distinct letter in later Latin-script alphabets."
+        )
     },
     {
         "uppercase": "K",
@@ -147,11 +158,34 @@ LATIN_ALPHABET = [
         "description": "A voiceless consonant."
     },
     {
+        "uppercase": "U",
+        "lowercase": "u",
+        "name": "U",
+        "pronunciation": "u",
+        "description": (
+            "Developed as a distinct form of V. "
+            "It represents a vowel in modern Latin-script alphabets."
+        )
+    },
+    {
         "uppercase": "V",
         "lowercase": "v",
         "name": "V",
-        "pronunciation": "u / w",
-        "description": "Represented both vowel U and consonantal W sounds."
+        "pronunciation": "w / v",
+        "description": (
+            "In Classical Latin, V represented both vowel "
+            "and consonantal sounds. It later became distinct from U."
+        )
+    },
+    {
+        "uppercase": "W",
+        "lowercase": "w",
+        "name": "Double U",
+        "pronunciation": "w",
+        "description": (
+            "Developed from doubled U or V forms in medieval "
+            "European writing. It was not part of Classical Latin."
+        )
     },
     {
         "uppercase": "X",
@@ -179,10 +213,10 @@ LATIN_ALPHABET = [
 
 def get_latin_alphabet():
     """
-    Return the complete Latin alphabet reference dataset.
+    Return the complete 26-letter Latin alphabet.
 
     Returns:
-        list: A list of dictionaries containing letter data.
+        list[dict]: Copies of the Latin letter records.
     """
     return [letter.copy() for letter in LATIN_ALPHABET]
 
@@ -195,7 +229,8 @@ def get_latin_letter(character):
         character (str): A single Latin letter.
 
     Returns:
-        dict | None: Letter information if found, otherwise None.
+        dict | None: Matching letter information,
+        or None if the character is not found.
     """
     if not isinstance(character, str) or len(character) != 1:
         return None
@@ -208,3 +243,13 @@ def get_latin_letter(character):
             return letter.copy()
 
     return None
+
+
+def get_latin_letter_count():
+    """
+    Return the number of Latin alphabet letters.
+
+    Returns:
+        int: Total number of letters.
+    """
+    return len(LATIN_ALPHABET)

@@ -5,7 +5,7 @@ Romanus - Greek and Hellenistic Astrology Page
 Displays historical reference information about
 the twelve zodiac signs and seven traditional planets.
 
-Version: 0.5.0
+Version: 0.7.0
 """
 
 from PySide6.QtWidgets import (
@@ -21,9 +21,15 @@ from PySide6.QtWidgets import (
     QTextEdit,
     QSplitter,
     QTabWidget,
+    QComboBox,
+    QSpinBox,
+    QPushButton,
+    QHBoxLayout,
 )
 
 from PySide6.QtCore import Qt
+
+from services.zodiac_service import ZodiacService
 
 from data.astrology import (
     get_zodiac_signs,
@@ -75,6 +81,7 @@ class AstrologyPage(QWidget):
 
         self.setup_zodiac_tab()
         self.setup_planets_tab()
+        self.setup_explorer_tab()
 
         layout.addWidget(self.tabs)
 
@@ -226,6 +233,135 @@ class AstrologyPage(QWidget):
 
         self.planet_table.itemSelectionChanged.connect(
             self.display_selected_planet
+        )
+
+    def setup_explorer_tab(self):
+        """Create the interactive Zodiac Explorer tab."""
+
+        tab = QWidget()
+        layout = QVBoxLayout(tab)
+        layout.setSpacing(12)
+
+        introduction = QLabel(
+            "Select a zodiac sign or enter a birth month and day "
+            "to explore its traditional astrological associations."
+        )
+        introduction.setWordWrap(True)
+        layout.addWidget(introduction)
+
+        # Select a sign directly.
+        sign_row = QHBoxLayout()
+        sign_row.addWidget(QLabel("Zodiac sign:"))
+
+        self.explorer_sign = QComboBox()
+        for sign in self.zodiac_signs:
+            self.explorer_sign.addItem(
+                f"{sign['symbol']} {sign['name']}",
+                sign['name'],
+            )
+        sign_row.addWidget(self.explorer_sign, 1)
+        layout.addLayout(sign_row)
+
+        show_button = QPushButton("Show Zodiac Profile")
+        show_button.clicked.connect(self.show_selected_profile)
+        layout.addWidget(show_button)
+
+        # Alternatively, calculate a sign using a calendar date.
+        date_row = QHBoxLayout()
+        date_row.addWidget(QLabel("Birth month:"))
+        self.birth_month = QSpinBox()
+        self.birth_month.setRange(1, 12)
+        self.birth_month.setValue(1)
+        date_row.addWidget(self.birth_month)
+
+        date_row.addWidget(QLabel("Day:"))
+        self.birth_day = QSpinBox()
+        self.birth_day.setRange(1, 31)
+        self.birth_day.setValue(1)
+        date_row.addWidget(self.birth_day)
+
+        date_button = QPushButton("Find Sign by Date")
+        date_button.clicked.connect(self.show_date_profile)
+        date_row.addWidget(date_button)
+        layout.addLayout(date_row)
+
+        # Display the selected sign's profile.
+        profile_group = QGroupBox("Your Zodiac Reference Profile")
+        profile_layout = QVBoxLayout(profile_group)
+
+        self.explorer_title = QLabel("Select a sign to begin.")
+        self.explorer_title.setObjectName("astrologyDetailTitle")
+        profile_layout.addWidget(self.explorer_title)
+
+        self.explorer_details = QTextEdit()
+        self.explorer_details.setReadOnly(True)
+        profile_layout.addWidget(self.explorer_details)
+
+        layout.addWidget(profile_group, 1)
+
+        disclaimer = QLabel(
+            "These descriptions reflect historical astrological "
+            "traditions, not scientifically established personality "
+            "traits or predictions. Date boundaries are approximate."
+        )
+        disclaimer.setWordWrap(True)
+        layout.addWidget(disclaimer)
+
+        self.tabs.addTab(tab, "Zodiac Explorer")
+
+        # Display an initial profile when the tab is opened.
+        self.show_selected_profile()
+
+    def show_selected_profile(self):
+        """Display the profile for the selected zodiac sign."""
+        name = self.explorer_sign.currentData()
+        profile = ZodiacService.get_zodiac_profile(name)
+        self.display_explorer_profile(profile)
+
+    def show_date_profile(self):
+        """Find and display a sign from the entered month and day."""
+        month = self.birth_month.value()
+        day = self.birth_day.value()
+
+        try:
+            profile = ZodiacService.get_profile_by_date(month, day)
+        except ValueError:
+            self.explorer_title.setText("Invalid date")
+            self.explorer_details.setPlainText(
+                "Enter a valid calendar month and day."
+            )
+            return
+
+        if profile is not None:
+            index = self.explorer_sign.findData(profile["name"])
+            if index >= 0:
+                self.explorer_sign.setCurrentIndex(index)
+
+        self.display_explorer_profile(profile)
+
+    def display_explorer_profile(self, profile):
+        """Render a traditional astrology profile safely."""
+        if profile is None:
+            self.explorer_title.setText("Profile unavailable")
+            self.explorer_details.setPlainText(
+                "No zodiac information was found for that selection."
+            )
+            return
+
+        self.explorer_title.setText(
+            f"{profile['symbol']} {profile['name']} "
+            f"({profile['greek_name']})"
+        )
+
+        self.explorer_details.setPlainText(
+            f"Element: {profile['element']}\n"
+            f"Modality: {profile['modality']}\n"
+            f"Traditional ruler: {profile['ruling_planet']}\n\n"
+            f"Historical reference:\n{profile['description']}\n\n"
+            f"Traditional interpretation:\n"
+            f"{profile.get('interpretation', '')}\n\n"
+            f"Planetary association:\n"
+            f"{profile.get('planet_description', '')}"
         )
 
     def configure_table(self, table):

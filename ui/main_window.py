@@ -5,7 +5,7 @@ Romanus - Main Application Window
 Manages sidebar navigation, the Home dashboard,
 reference pages, and unified search.
 
-Version: 0.6.0
+Version: 0.8.0
 """
 
 from PySide6.QtWidgets import (
@@ -52,20 +52,38 @@ class MainWindow(QMainWindow):
         """Create the sidebar and application pages."""
 
         central_widget = QWidget()
+        central_widget.setObjectName("centralWidget")
         self.setCentralWidget(central_widget)
 
         main_layout = QHBoxLayout(central_widget)
-        main_layout.setContentsMargins(10, 10, 10, 10)
+        main_layout.setContentsMargins(12, 12, 12, 12)
         main_layout.setSpacing(12)
 
-        # Navigation sidebar.
-        sidebar = QVBoxLayout()
+        # ------------------------------------------
+        # Sidebar container
+        # ------------------------------------------
+
+        self.sidebar_widget = QWidget()
+        self.sidebar_widget.setObjectName("sidebar")
+        self.sidebar_widget.setFixedWidth(230)
+
+        sidebar = QVBoxLayout(self.sidebar_widget)
+        sidebar.setContentsMargins(12, 18, 12, 12)
         sidebar.setSpacing(8)
 
         title = QLabel("Romanus")
         title.setObjectName("sidebarTitle")
-
         sidebar.addWidget(title)
+
+        subtitle = QLabel("Greco-Roman Reference")
+        subtitle.setObjectName("sidebarSubtitle")
+        sidebar.addWidget(subtitle)
+
+        sidebar.addSpacing(20)
+
+        # ------------------------------------------
+        # Navigation buttons
+        # ------------------------------------------
 
         self.home_button = QPushButton("Home")
         self.search_button = QPushButton("Search")
@@ -73,7 +91,9 @@ class MainWindow(QMainWindow):
         self.greek_button = QPushButton("Greek Alphabet")
         self.numerals_button = QPushButton("Roman Numerals")
         self.astrology_button = QPushButton("Greek Astrology")
-        self.deities_button = QPushButton("Greco-Roman Deities")
+        self.deities_button = QPushButton(
+            "Greco-Roman Deities"
+        )
 
         self.navigation_buttons = {
             "home": self.home_button,
@@ -86,14 +106,29 @@ class MainWindow(QMainWindow):
         }
 
         for button in self.navigation_buttons.values():
-            button.setMinimumHeight(36)
+            button.setObjectName("navigationButton")
+            button.setMinimumHeight(42)
             button.setCheckable(True)
+            button.setCursor(
+                __import__(
+                    "PySide6.QtCore",
+                    fromlist=["Qt"]
+                ).Qt.CursorShape.PointingHandCursor
+            )
             sidebar.addWidget(button)
 
         sidebar.addStretch()
 
-        # Application pages.
+        version_label = QLabel("Romanus v0.8.0")
+        version_label.setObjectName("sidebarVersion")
+        sidebar.addWidget(version_label)
+
+        # ------------------------------------------
+        # Application pages
+        # ------------------------------------------
+
         self.pages = QStackedWidget()
+        self.pages.setObjectName("pageStack")
 
         self.home_page = HomePage()
         self.search_page = SearchPage()
@@ -116,7 +151,7 @@ class MainWindow(QMainWindow):
         for page in self.page_widgets.values():
             self.pages.addWidget(page)
 
-        main_layout.addLayout(sidebar)
+        main_layout.addWidget(self.sidebar_widget)
         main_layout.addWidget(self.pages, 1)
 
     def setup_connections(self):
@@ -128,7 +163,7 @@ class MainWindow(QMainWindow):
                 self.navigate_to_page(name)
             )
 
-        # Home Page navigation.
+        # Home dashboard navigation.
         self.home_page.navigate_requested.connect(
             self.navigate_to_page
         )
@@ -141,7 +176,6 @@ class MainWindow(QMainWindow):
     def setup_shortcuts(self):
         """Configure application keyboard shortcuts."""
 
-        # Ctrl+F opens the unified search page.
         self.search_shortcut = QShortcut(
             QKeySequence("Ctrl+F"),
             self
@@ -152,12 +186,7 @@ class MainWindow(QMainWindow):
         )
 
     def navigate_to_page(self, page_name):
-        """
-        Navigate to the requested reference page.
-
-        Args:
-            page_name (str): Destination page identifier.
-        """
+        """Navigate to a reference page."""
 
         page = self.page_widgets.get(page_name)
 
@@ -166,7 +195,7 @@ class MainWindow(QMainWindow):
 
         self.pages.setCurrentWidget(page)
 
-        # Update active sidebar button.
+        # Highlight the active navigation button.
         for name, button in self.navigation_buttons.items():
             button.setChecked(name == page_name)
 
@@ -174,6 +203,6 @@ class MainWindow(QMainWindow):
             self.search_page.focus_search()
 
     def open_search(self):
-        """Open unified search using the keyboard shortcut."""
+        """Open unified search using Ctrl+F."""
 
         self.navigate_to_page("search")

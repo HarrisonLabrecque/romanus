@@ -1,0 +1,204 @@
+
+/*
+Romanus - Global Stylesheet
+Version: 0.8.0
+
+Theme: Dark Greco-Roman Reference Interface
+*/
+
+/* -----------------------------------------
+   Global widgets
+----------------------------------------- */
+
+QWidget {
+    background-color: #101827;
+    color: #e5e7eb;
+    font-family: "Segoe UI";
+    font-size: 13px;
+}
+
+QMainWindow {
+    background-color: #101827;
+}
+
+/* -----------------------------------------
+   Sidebar
+----------------------------------------- */
+
+QWidget#sidebar {
+    background-color: #172235;
+    border: 1px solid #334155;
+    border-radius: 10px;
+}
+
+QLabel#sidebarTitle {
+    font-size: 25px;
+    font-weight: bold;
+    color: #f8fafc;
+    background: transparent;
+}
+
+QLabel#sidebarSubtitle {
+    font-size: 11px;
+    color: #94a3b8;
+    background: transparent;
+}
+
+QLabel#sidebarVersion {
+    font-size: 11px;
+    color: #94a3b8;
+    background: transparent;
+}
+
+/* -----------------------------------------
+   Navigation buttons
+----------------------------------------- */
+
+QPushButton#navigationButton {
+    background-color: transparent;
+    color: #cbd5e1;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    padding: 10px 12px;
+    text-align: left;
+}
+
+QPushButton#navigationButton:hover {
+    background-color: #26364e;
+    color: #ffffff;
+}
+
+QPushButton#navigationButton:checked {
+    background-color: #254a78;
+    color: #ffffff;
+    border-left: 3px solid #60a5fa;
+    font-weight: bold;
+}
+
+QPushButton#navigationButton:focus {
+    border: 2px solid #93c5fd;
+}
+
+/* -----------------------------------------
+   General buttons
+----------------------------------------- */
+
+QPushButton {
+    background-color: #2563eb;
+    color: #ffffff;
+    border: 1px solid #3b82f6;
+    border-radius: 6px;
+    padding: 8px 12px;
+    min-height: 20px;
+}
+
+QPushButton:hover {
+    background-color: #1d4ed8;
+}
+
+QPushButton:pressed {
+    background-color: #1e40af;
+}
+
+QPushButton:disabled {
+    background-color: #334155;
+    color: #94a3b8;
+    border-color: #475569;
+}
+
+/* -----------------------------------------
+   Input fields
+----------------------------------------- */
+
+QLineEdit,
+QSpinBox,
+QComboBox {
+    background-color: #1e293b;
+    color: #f8fafc;
+    border: 1px solid #475569;
+    border-radius: 6px;
+    padding: 7px;
+}
+
+QLineEdit:focus,
+QSpinBox:focus,
+QComboBox:focus {
+    border: 2px solid #60a5fa;
+}
+
+/* -----------------------------------------
+   Reference tables
+----------------------------------------- */
+
+QTableWidget,
+QTableView {
+    background-color: #172235;
+    alternate-background-color: #1e293b;
+    color: #f8fafc;
+    gridline-color: #334155;
+    border: 1px solid #475569;
+    border-radius: 6px;
+    selection-background-color: #254a78;
+    selection-color: #ffffff;
+}
+
+QHeaderView::section {
+    background-color: #26364e;
+    color: #f8fafc;
+    border: 1px solid #334155;
+    padding: 8px;
+    font-weight: bold;
+}
+
+/* -----------------------------------------
+   Tabs
+----------------------------------------- */
+
+QTabWidget::pane {
+    border: 1px solid #475569;
+    border-radius: 6px;
+}
+
+QTabBar::tab {
+    background-color: #1e293b;
+    color: #cbd5e1;
+    padding: 10px 16px;
+    border: 1px solid #334155;
+}
+
+QTabBar::tab:selected {
+    background-color: #254a78;
+    color: #ffffff;
+}
+
+/* -----------------------------------------
+   Text areas
+----------------------------------------- */
+
+QTextEdit,
+QPlainTextEdit {
+    background-color: #172235;
+    color: #f8fafc;
+    border: 1px solid #475569;
+    border-radius: 6px;
+    padding: 8px;
+}
+
+/* -----------------------------------------
+   Scrollbars
+----------------------------------------- */
+
+QScrollBar:vertical {
+    background: #101827;
+    width: 12px;
+}
+
+QScrollBar::handle:vertical {
+    background: #475569;
+    border-radius: 5px;
+    min-height: 24px;
+}
+
+QScrollBar::handle:vertical:hover {
+    background: #64748b;
+}

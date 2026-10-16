@@ -11,6 +11,7 @@ Version: 0.8.0
 import sys
 from pathlib import Path
 
+
 from PySide6.QtWidgets import QApplication
 
 from ui.main_window import MainWindow

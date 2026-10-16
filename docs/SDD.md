@@ -2612,3 +2612,53 @@ python -m pytest tests/test_zodiac_service.py -v
 ## A.6 Release verification
 
 The v0.7.0 release is ready for documentation sign-off after the new service tests pass, the GUI is manually checked, and the SRS/SDD/changelog reflect the implemented behavior.
+
+
+## Romanus v0.8.0 — UI and Accessibility Design
+
+### Main Window
+
+Module: ui/main_window.py
+
+Responsibilities:
+- Initialize and display application pages.
+- Manage sidebar navigation.
+- Maintain active-page button state.
+- Register keyboard shortcuts.
+- Provide accessible labels, descriptions, and tooltips.
+
+### Global Stylesheet
+
+File: resources/styles/main.qss
+
+The stylesheet provides:
+- Application-wide colors and typography.
+- Sidebar and navigation button styling.
+- Active-page highlighting.
+- Hover and focus indicators.
+- Consistent styling for tables, tabs, and input controls.
+
+The stylesheet is loaded during application initialization
+through main.py.
+
+### Keyboard Shortcuts
+
+- Ctrl+F opens the unified Search page.
+- Ctrl+H opens the Home dashboard.
+- Alt+Left opens the Home dashboard.
+
+Alt+Left currently returns to Home; navigation history is
+not implemented.
+
+### Automated Testing
+
+The pytest suite includes:
+- Main window initialization tests.
+- Page registration and navigation tests.
+- Stylesheet configuration tests.
+- Accessibility metadata and focus policy tests.
+- Keyboard shortcut signal tests.
+- Existing service and reference functionality tests.
+
+The latest reported test run completed with 138 passing tests.
+

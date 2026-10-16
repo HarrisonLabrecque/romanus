@@ -1262,3 +1262,39 @@ python -m pytest tests/test_zodiac_service.py -v
 ```
 
 **Testing note:** Earlier prototype sections describe unit tests as planned; this appendix establishes pytest as the chosen framework for the v0.7.0 implementation.
+
+
+## Romanus v0.8.0 — User Interface and Accessibility
+
+### Functional Requirements
+
+- FR-0801: The application shall provide consistent styling
+  across its reference pages using a global QSS stylesheet.
+
+- FR-0802: The sidebar shall visually identify the active page.
+
+- FR-0803: Sidebar navigation buttons shall support keyboard focus.
+
+- FR-0804: Navigation buttons shall provide accessible names,
+  descriptions, and tooltips.
+
+- FR-0805: The application shall provide the following shortcuts:
+  - Ctrl+F: Open Search.
+  - Ctrl+H: Open Home.
+  - Alt+Left: Return to Home.
+
+- FR-0806: The application shall provide visible focus indicators
+  for supported interactive controls.
+
+### Nonfunctional Requirements
+
+- NFR-0801: Romanus shall maintain a consistent visual appearance.
+
+- NFR-0802: The interface shall remain usable at its supported
+  minimum window dimensions.
+
+- NFR-0803: Existing reference functionality shall remain
+  operational after the UI changes.
+
+- NFR-0804: Automated regression tests shall cover navigation,
+  stylesheet configuration, and accessibility metadata.

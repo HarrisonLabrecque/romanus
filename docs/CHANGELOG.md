@@ -4,6 +4,30 @@ All notable changes to **Romanus**, an offline-first Greco-Roman reference appli
 
 The project uses version numbers in the form MAJOR.MINOR.PATCH. Dates are omitted where release dates have not been confirmed.
 
+
+## [0.8.0] - Unreleased
+
+### Added
+- Global QSS styling system.
+- Accessible names and descriptions for navigation buttons.
+- Navigation tooltips and keyboard focus support.
+- Ctrl+H shortcut for Home navigation.
+- Alt+Left shortcut for returning to Home.
+- Automated tests for accessibility and stylesheet configuration.
+
+### Changed
+- Improved sidebar layout and navigation appearance.
+- Added active-page highlighting.
+- Improved focus indicators for interactive controls.
+- Standardized visual styling across the application.
+
+### Testing
+- 138 automated tests passing.
+- Added GUI navigation and accessibility regression coverage.
+- Final manual GUI verification pending.
+
+
+
 ## [Unreleased]
 
 ### Planned

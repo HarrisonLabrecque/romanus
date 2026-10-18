@@ -1,19 +1,30 @@
-# Python virtual environment
-romanus/
 
+# =========================================
+# Python
+# =========================================
 
-# Python cache
 __pycache__/
 *.py[cod]
+.pytest_cache/
 
-# IDE files
-.vscode/
-.idea/
+# =========================================
+# Virtual Environments
+# =========================================
 
-# Environment variables
-.env
+.venv/
+venv/
+env/
 
-# Build / distribution
+# =========================================
+# PyInstaller
+# =========================================
+
 build/
 dist/
-*.spec
+
+# =========================================
+# Development Tools
+# =========================================
+
+.vscode/
+.idea/

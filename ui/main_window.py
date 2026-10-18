@@ -169,7 +169,7 @@ class MainWindow(QMainWindow):
         # Push version information to the bottom.
         sidebar.addStretch()
 
-        version_label = QLabel("Romanus v0.8.0")
+        version_label = QLabel("Romanus v0.9.0")
         version_label.setObjectName("sidebarVersion")
 
         sidebar.addWidget(version_label)

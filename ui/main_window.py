@@ -2,10 +2,10 @@
 """
 Romanus - Main Application Window
 
-Manages sidebar navigation, the Home dashboard,
-reference pages, unified search, and accessibility.
+Manages the sidebar, reference pages, unified search,
+keyboard shortcuts, and accessibility features.
 
-Version: 0.8.0
+Version: 1.0.0
 """
 
 from PySide6.QtCore import Qt
@@ -37,7 +37,7 @@ class MainWindow(QMainWindow):
         super().__init__()
 
         # ------------------------------------------
-        # Window configuration
+        # Window Configuration
         # ------------------------------------------
 
         self.setWindowTitle(
@@ -47,20 +47,20 @@ class MainWindow(QMainWindow):
         self.resize(1100, 700)
         self.setMinimumSize(850, 550)
 
-        # Accessibility information for the window.
+        # Main window accessibility information.
         self.setAccessibleName("Romanus Main Window")
         self.setAccessibleDescription(
-            "Greco-Roman reference application with "
-            "alphabet, numeral, deity, astrology, "
-            "and search reference pages."
+            "Greco-Roman reference application featuring "
+            "alphabets, Roman numerals, astrology, "
+            "deities, and unified search."
         )
 
-        # Initialize application components.
+        # Initialize the interface.
         self.setup_ui()
         self.setup_connections()
         self.setup_shortcuts()
 
-        # Display Home by default.
+        # Open the Home dashboard by default.
         self.navigate_to_page("home")
 
     # --------------------------------------------------
@@ -68,7 +68,7 @@ class MainWindow(QMainWindow):
     # --------------------------------------------------
 
     def setup_ui(self):
-        """Create the sidebar and application pages."""
+        """Build the sidebar and reference page container."""
 
         central_widget = QWidget()
         central_widget.setObjectName("centralWidget")
@@ -80,7 +80,7 @@ class MainWindow(QMainWindow):
         main_layout.setSpacing(12)
 
         # ------------------------------------------
-        # Sidebar container
+        # Sidebar
         # ------------------------------------------
 
         self.sidebar_widget = QWidget()
@@ -94,19 +94,17 @@ class MainWindow(QMainWindow):
         # Application title.
         title = QLabel("Romanus")
         title.setObjectName("sidebarTitle")
-
         sidebar.addWidget(title)
 
         # Application subtitle.
         subtitle = QLabel("Greco-Roman Reference")
         subtitle.setObjectName("sidebarSubtitle")
-
         sidebar.addWidget(subtitle)
 
         sidebar.addSpacing(20)
 
         # ------------------------------------------
-        # Navigation buttons
+        # Navigation Buttons
         # ------------------------------------------
 
         self.home_button = QPushButton("Home")
@@ -119,7 +117,7 @@ class MainWindow(QMainWindow):
             "Greco-Roman Deities"
         )
 
-        # Map page identifiers to navigation buttons.
+        # Navigation button registry.
         self.navigation_buttons = {
             "home": self.home_button,
             "search": self.search_button,
@@ -130,52 +128,44 @@ class MainWindow(QMainWindow):
             "deities": self.deities_button,
         }
 
-        # Configure accessible sidebar navigation.
+        # Configure navigation accessibility and styling.
         for page_name, button in self.navigation_buttons.items():
 
-            # QSS styling identifier.
             button.setObjectName("navigationButton")
-
-            # Consistent button dimensions.
             button.setMinimumHeight(42)
-
-            # Support active-page highlighting.
             button.setCheckable(True)
 
-            # Use a pointing cursor when hovering.
             button.setCursor(
                 Qt.CursorShape.PointingHandCursor
             )
 
-            # Allow keyboard focus through Tab navigation.
+            # Enable keyboard focus.
             button.setFocusPolicy(
                 Qt.FocusPolicy.StrongFocus
             )
 
-            # Provide information for assistive technologies.
+            # Accessible information.
             button.setAccessibleName(button.text())
             button.setAccessibleDescription(
                 f"Navigate to the {button.text()} reference page"
             )
 
-            # Provide a tooltip for mouse users.
+            # Navigation tooltip.
             button.setToolTip(
                 f"Open {button.text()}"
             )
 
-            # Add the button to the sidebar.
             sidebar.addWidget(button)
 
-        # Push version information to the bottom.
         sidebar.addStretch()
 
-        version_label = QLabel("Romanus v0.9.0")
+        # Display current application version.
+        version_label = QLabel("Romanus v1.0.0")
         version_label.setObjectName("sidebarVersion")
-
         sidebar.addWidget(version_label)
 
         # ------------------------------------------
-        # Application pages
+        # Reference Pages
         # ------------------------------------------
 
         self.pages = QStackedWidget()
@@ -189,7 +179,7 @@ class MainWindow(QMainWindow):
         self.astrology_page = AstrologyPage()
         self.deities_page = DeitiesPage()
 
-        # Map page identifiers to their widgets.
+        # Reference page registry.
         self.page_widgets = {
             "home": self.home_page,
             "search": self.search_page,
@@ -204,7 +194,7 @@ class MainWindow(QMainWindow):
         for page in self.page_widgets.values():
             self.pages.addWidget(page)
 
-        # Add sidebar and content area.
+        # Add sidebar and page container.
         main_layout.addWidget(self.sidebar_widget)
         main_layout.addWidget(self.pages, 1)
 
@@ -213,9 +203,8 @@ class MainWindow(QMainWindow):
     # --------------------------------------------------
 
     def setup_connections(self):
-        """Connect sidebar and dashboard navigation."""
+        """Connect navigation buttons and page signals."""
 
-        # Connect sidebar buttons to their reference pages.
         for page_name, button in self.navigation_buttons.items():
 
             button.clicked.connect(
@@ -228,7 +217,7 @@ class MainWindow(QMainWindow):
             self.navigate_to_page
         )
 
-        # Search result navigation.
+        # Unified search navigation.
         self.search_page.navigate_requested.connect(
             self.navigate_to_page
         )
@@ -238,9 +227,9 @@ class MainWindow(QMainWindow):
     # --------------------------------------------------
 
     def setup_shortcuts(self):
-        """Configure application keyboard shortcuts."""
+        """Register application keyboard shortcuts."""
 
-        # Ctrl+F opens unified search.
+        # Ctrl+F opens Search.
         self.search_shortcut = QShortcut(
             QKeySequence("Ctrl+F"),
             self
@@ -250,7 +239,7 @@ class MainWindow(QMainWindow):
             self.open_search
         )
 
-        # Ctrl+H opens the Home dashboard.
+        # Ctrl+H opens Home.
         self.home_shortcut = QShortcut(
             QKeySequence("Ctrl+H"),
             self
@@ -284,18 +273,17 @@ class MainWindow(QMainWindow):
 
         page = self.page_widgets.get(page_name)
 
-        # Ignore unknown page identifiers.
         if page is None:
             return
 
         # Display the requested page.
         self.pages.setCurrentWidget(page)
 
-        # Update active sidebar button highlighting.
+        # Update active navigation button state.
         for name, button in self.navigation_buttons.items():
             button.setChecked(name == page_name)
 
-        # Place keyboard focus in the search input.
+        # Focus the search field when opening Search.
         if page_name == "search":
             self.search_page.focus_search()
 
@@ -304,6 +292,6 @@ class MainWindow(QMainWindow):
     # --------------------------------------------------
 
     def open_search(self):
-        """Open unified search using Ctrl+F."""
+        """Open unified search."""
 
         self.navigate_to_page("search")

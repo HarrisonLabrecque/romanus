@@ -2,10 +2,12 @@
 """
 Romanus - Application Entry Point
 
-Initializes the PySide6 application and loads
-resources for development and packaged builds.
+Initializes the PySide6 application, loads the
+global stylesheet, and launches the main window.
 
-Version: 0.9.0
+Supports both development and PyInstaller builds.
+
+Version: 1.0.0
 """
 
 import sys
@@ -17,31 +19,36 @@ from ui.main_window import MainWindow
 
 
 # --------------------------------------------------
+# Application Information
+# --------------------------------------------------
+
+APP_NAME = "Romanus"
+APP_VERSION = "1.0.0"
+ORGANIZATION_NAME = "Romanus"
+
+
+# --------------------------------------------------
 # Resource Management
 # --------------------------------------------------
 
 def get_resource_path(relative_path):
     """
-    Return the absolute path to an application resource.
+    Resolve the absolute path to an application resource.
 
-    Supports:
-    - Standard Python development environment
-    - PyInstaller one-folder builds
-    - PyInstaller one-file builds
+    Supports normal Python execution and PyInstaller
+    one-folder and one-file builds.
 
     Args:
-        relative_path (str): Resource path relative
-                             to the project root.
+        relative_path (str): Path relative to the
+                             application resource root.
 
     Returns:
         Path: Absolute resource path.
     """
 
     if hasattr(sys, "_MEIPASS"):
-        # PyInstaller extracts bundled resources here.
         base_path = Path(sys._MEIPASS)
     else:
-        # Normal Python execution.
         base_path = Path(__file__).resolve().parent
 
     return base_path / relative_path
@@ -53,10 +60,10 @@ def get_resource_path(relative_path):
 
 def load_stylesheet(app):
     """
-    Load the application's global QSS stylesheet.
+    Load the Romanus global QSS stylesheet.
 
     Args:
-        app (QApplication): Application instance.
+        app (QApplication): Active Qt application.
     """
 
     stylesheet_path = get_resource_path(
@@ -65,8 +72,8 @@ def load_stylesheet(app):
 
     if not stylesheet_path.is_file():
         print(
-            f"Warning: Stylesheet not found: "
-            f"{stylesheet_path}"
+            f"Warning: Stylesheet not found: {stylesheet_path}",
+            file=sys.stderr,
         )
         return
 
@@ -79,7 +86,8 @@ def load_stylesheet(app):
 
     except OSError as error:
         print(
-            f"Error loading stylesheet: {error}"
+            f"Error loading stylesheet: {error}",
+            file=sys.stderr,
         )
 
 
@@ -88,25 +96,25 @@ def load_stylesheet(app):
 # --------------------------------------------------
 
 def main():
-    """Start the Romanus desktop application."""
+    """Initialize and launch Romanus."""
 
     app = QApplication(sys.argv)
 
-    # Application metadata.
-    app.setApplicationName("Romanus")
-    app.setApplicationVersion("0.9.0")
-    app.setOrganizationName("Romanus")
+    # Configure application metadata.
+    app.setApplicationName(APP_NAME)
+    app.setApplicationVersion(APP_VERSION)
+    app.setOrganizationName(ORGANIZATION_NAME)
 
-    # Apply the global stylesheet.
+    # Apply the global application stylesheet.
     load_stylesheet(app)
 
-    # Initialize the main application window.
+    # Create and display the main application window.
     window = MainWindow()
     window.show()
 
     # Start the Qt event loop.
-    sys.exit(app.exec())
+    return app.exec()
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

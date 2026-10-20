@@ -122,6 +122,11 @@ Additional documentation is available in the `docs/` directory:
 
 Future improvements may include additional reference content, interface refinements, and expanded educational functionality.
 
+
 ## License
 
-See the repository's `LICENSE` file for the applicable license terms.
+Romanus is licensed under the MIT License.
+
+Copyright (c) 2026 Harrison Labrecque
+
+See the [LICENSE](LICENSE) file for details.

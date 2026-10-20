@@ -5,6 +5,79 @@ All notable changes to **Romanus**, an offline-first Greco-Roman reference appli
 The project uses version numbers in the form MAJOR.MINOR.PATCH. Dates are omitted where release dates have not been confirmed.
 
 
+
+## [1.0.0] - 2026-10-20
+
+### Stable Release
+
+First stable release of Romanus, a Python/PySide6
+desktop application for Greco-Roman reference and education.
+
+### Included
+- Latin and Greek alphabet references.
+- Roman numeral reference and conversion.
+- Greco-Roman deity reference.
+- Traditional astrology references.
+- Zodiac Explorer.
+- Unified reference search.
+- Home dashboard and sidebar navigation.
+- Global QSS styling.
+- Accessibility labels, descriptions, and tooltips.
+- Keyboard navigation and shortcuts.
+- Windows executable distribution.
+
+### Changed
+- Updated application version to 1.0.0.
+- Finalized application startup configuration.
+- Prepared application for stable Windows distribution.
+
+### Testing
+- 179 automated tests passed.
+- Final manual release checks completed.
+- Windows executable successfully built and launched.
+
+### Distribution
+- Windows application packaged using PyInstaller.
+- One-folder distribution containing Romanus.exe
+  and its required dependencies.
+
+
+## [0.9.0] - 2026-10-20
+
+### Added
+- PyInstaller packaging configuration.
+- Romanus.spec build configuration.
+- Windows executable generation support.
+- Resource path management for packaged applications.
+- Automated resource path and stylesheet tests.
+
+### Changed
+- Updated application version to 0.9.0.
+- Updated application startup and resource handling.
+- Improved stylesheet loading for packaged environments.
+- Prepared the project for Windows distribution.
+- Updated .gitignore to exclude generated build artifacts.
+
+### Packaging
+- Configured PyInstaller one-folder distribution.
+- Configured Windows GUI execution without a console window.
+- Included required application modules and dependencies.
+- Bundled the global QSS stylesheet.
+- Successfully generated Romanus.exe.
+
+### Testing
+- Verified resource path handling.
+- Verified stylesheet loading.
+- Successfully launched the packaged Windows executable.
+
+### Notes
+- Version 0.9.0 focused on packaging and distribution.
+- No major reference features were introduced.
+- The next planned milestone was v1.0.0,
+  the first stable release.
+
+
+
 ## [0.8.0] - Unreleased
 
 ### Added

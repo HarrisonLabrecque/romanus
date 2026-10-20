@@ -2662,3 +2662,222 @@ The pytest suite includes:
 
 The latest reported test run completed with 138 passing tests.
 
+
+## Romanus v0.9.0 — Packaging Architecture
+
+### Overview
+
+Version 0.9.0 introduces a Windows distribution
+architecture using PyInstaller.
+
+The application supports two execution environments:
+
+1. Python development environment.
+2. PyInstaller packaged Windows application.
+
+### Application Entry Point
+
+File: main.py
+
+Responsibilities:
+- Initialize QApplication.
+- Configure application metadata.
+- Load the global stylesheet.
+- Resolve application resource paths.
+- Initialize and display MainWindow.
+
+### Resource Path Management
+
+Function: get_resource_path(relative_path)
+
+The function determines the resource root based
+on the execution environment.
+
+Development mode:
+- Resources are resolved relative to main.py.
+
+Packaged mode:
+- Resources are resolved using the PyInstaller
+  runtime resource directory, sys._MEIPASS.
+
+This design supports both one-folder and one-file
+PyInstaller resource layouts.
+
+### Stylesheet Management
+
+Function: load_stylesheet(app)
+
+Responsibilities:
+- Locate resources/styles/main.qss.
+- Read the stylesheet using UTF-8 encoding.
+- Apply the stylesheet to QApplication.
+- Handle missing or unreadable stylesheet files.
+
+### PyInstaller Configuration
+
+File: Romanus.spec
+
+Responsibilities:
+- Define the application entry point.
+- Analyze Python dependencies.
+- Include application resources.
+- Collect required application modules.
+- Configure the Windows executable.
+- Assemble the distribution directory.
+
+### Build Configuration
+
+Application name: Romanus
+
+Packaging tool: PyInstaller
+
+Distribution format: One-folder
+
+Console window: Disabled
+
+Entry point: main.py
+
+Bundled stylesheet:
+resources/styles/main.qss
+
+### Distribution Structure
+
+dist/
+└── Romanus/
+    ├── Romanus.exe
+    └── _internal/
+        ├── Application dependencies
+        └── resources/
+            └── styles/
+                └── main.qss
+
+### Version Control
+
+The following generated directories are excluded
+from Git version control:
+
+- build/
+- dist/
+
+Romanus.spec remains tracked in Git.
+
+### Testing
+
+Automated tests verify:
+- Resource path resolution.
+- Development environment resource loading.
+- Packaged environment path resolution.
+- Stylesheet availability.
+- Stylesheet loading.
+
+Manual verification confirmed that Romanus.exe
+was generated and successfully launched.
+
+### Design Outcome
+
+Romanus can be packaged as a standalone Windows
+desktop application while preserving its existing
+Python/PySide6 architecture.
+
+
+## Romanus v1.0.0 — Stable Release Architecture
+
+### Technology Stack
+
+- Programming language: Python
+- Desktop framework: PySide6
+- Styling: Qt Style Sheets (QSS)
+- Testing: pytest and pytest-qt
+- Packaging: PyInstaller
+- Version control: Git and GitHub
+
+### Application Entry Point
+
+File: main.py
+
+Responsibilities:
+- Initialize QApplication.
+- Configure application metadata.
+- Set application version to 1.0.0.
+- Resolve resource paths.
+- Load the global stylesheet.
+- Launch the main application window.
+
+### Main Window
+
+File: ui/main_window.py
+
+Responsibilities:
+- Initialize the application interface.
+- Manage seven reference pages.
+- Provide sidebar navigation.
+- Maintain active-page highlighting.
+- Configure keyboard shortcuts.
+- Support accessibility metadata and tooltips.
+
+### Reference Pages
+
+Directory: ui/pages/
+
+Modules:
+- home_page.py
+- search_page.py
+- latin_page.py
+- greek_page.py
+- numerals_page.py
+- astrology_page.py
+- deities_page.py
+
+### Application Data
+
+Directory: data/
+
+Stores reference datasets for alphabets, numerals,
+deities, and traditional astrology.
+
+### Services
+
+Directory: services/
+
+Provides application logic, including unified search
+and Zodiac Explorer functionality.
+
+### Styling
+
+File: resources/styles/main.qss
+
+Provides application-wide visual styling, navigation
+states, and keyboard focus indicators.
+
+### Resource Management
+
+The get_resource_path() function supports resource
+resolution in normal Python execution and PyInstaller
+packaged environments.
+
+### Windows Distribution
+
+Configuration: Romanus.spec
+
+PyInstaller packages the application as a Windows
+one-folder distribution containing Romanus.exe,
+required dependencies, and bundled resources.
+
+### Quality Assurance
+
+Testing framework: pytest and pytest-qt
+
+The stable release test suite includes:
+- Application configuration tests
+- Main window tests
+- Navigation tests
+- Accessibility tests
+- Stylesheet tests
+- Resource path tests
+- Reference and service tests
+- Release regression tests
+
+Final reported result: 179 tests passed.
+
+Manual release checks were also completed.
+

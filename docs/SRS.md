@@ -1298,3 +1298,120 @@ python -m pytest tests/test_zodiac_service.py -v
 
 - NFR-0804: Automated regression tests shall cover navigation,
   stylesheet configuration, and accessibility metadata.
+
+
+
+## Romanus v0.9.0 — Packaging and Distribution
+
+### Release Objective
+
+Romanus v0.9.0 introduces Windows executable packaging,
+allowing the application to run independently of a
+Python development environment.
+
+### Functional Requirements
+
+- FR-0901: The application shall support packaging
+  into a Windows executable using PyInstaller.
+
+- FR-0902: The packaged application shall include
+  the required PySide6 dependencies.
+
+- FR-0903: The packaged application shall include
+  the global QSS stylesheet.
+
+- FR-0904: The application shall resolve resource
+  paths correctly in both development and packaged
+  environments.
+
+- FR-0905: The packaged executable shall launch
+  without requiring a separate Python installation.
+
+- FR-0906: The packaged application shall preserve
+  all existing reference pages and functionality.
+
+- FR-0907: The packaged application shall preserve
+  sidebar navigation and keyboard shortcuts.
+
+- FR-0908: The application shall display version
+  information corresponding to v0.9.0.
+
+### Nonfunctional Requirements
+
+- NFR-0901: Packaging shall use PyInstaller.
+
+- NFR-0902: The initial distribution shall use
+  PyInstaller's one-folder packaging format.
+
+- NFR-0903: The Windows application shall launch
+  without opening a separate console window.
+
+- NFR-0904: Build artifacts shall be excluded
+  from Git version control.
+
+- NFR-0905: Packaging configuration shall be
+  maintained in the project repository.
+
+- NFR-0906: Existing automated regression tests
+  shall continue to pass after packaging changes.
+
+### Acceptance Criteria
+
+- PyInstaller successfully generates Romanus.exe.
+- The executable launches successfully on Windows.
+- The global stylesheet loads correctly.
+- Existing reference pages remain available.
+- Application navigation remains functional.
+- Required resources are included in the distribution.
+
+
+
+## Romanus v1.0.0 — Stable Release Requirements
+
+### Release Objective
+
+Romanus v1.0.0 provides a stable desktop reference
+application for exploring Greco-Roman languages,
+numerals, mythology, and traditional astrology.
+
+### Functional Requirements
+
+- FR-1001: The application shall provide a Home dashboard.
+- FR-1002: The application shall display the Latin alphabet.
+- FR-1003: The application shall display the Greek alphabet.
+- FR-1004: The application shall provide Roman numeral references
+  and bidirectional numeral conversion.
+- FR-1005: The application shall provide a Greco-Roman deity reference.
+- FR-1006: The application shall provide traditional astrology
+  references and a Zodiac Explorer.
+- FR-1007: The application shall support unified reference search.
+- FR-1008: The application shall support sidebar navigation
+  with active-page highlighting.
+- FR-1009: The application shall provide accessible names,
+  descriptions, tooltips, and keyboard focus support.
+- FR-1010: The application shall support keyboard shortcuts:
+  Ctrl+F, Ctrl+H, and Alt+Left.
+- FR-1011: The application shall load its stylesheet in both
+  development and packaged environments.
+- FR-1012: The application shall be distributable as a
+  standalone Windows desktop application.
+
+### Nonfunctional Requirements
+
+- NFR-1001: The application shall use Python and PySide6.
+- NFR-1002: The interface shall maintain consistent QSS styling.
+- NFR-1003: The application shall support a minimum window
+  size of 850 × 550 pixels.
+- NFR-1004: Automated regression tests shall cover major
+  application functionality.
+- NFR-1005: The packaged application shall not require users
+  to install Python separately.
+- NFR-1006: The release shall include installation and
+  usage documentation.
+
+### Verification
+
+- Automated regression testing: 179 tests passed.
+- Manual application release checks: Completed.
+- Windows executable generation: Completed.
+- Windows executable launch: Verified.

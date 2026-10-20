@@ -186,7 +186,7 @@ class HomePage(QWidget):
         layout.addStretch()
 
         footer = QLabel(
-            "Romanus v0.6.0 | Greco-Roman Reference Application"
+            "Romanus v1.0.0 | Greco-Roman Reference Application"
         )
         footer.setObjectName("dashboardFooter")
         footer.setAlignment(Qt.AlignmentFlag.AlignCenter)

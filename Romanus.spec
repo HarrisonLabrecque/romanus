@@ -4,11 +4,12 @@
 """
 Romanus - PyInstaller Build Configuration
 
-Packages the Romanus desktop application with
-its Python modules, PySide6 dependencies, and
-stylesheet resources.
+Packages the Romanus desktop application into
+a single Windows executable containing Python,
+PySide6 dependencies, application modules,
+and stylesheet resources.
 
-Version: 0.9.0
+Version: 1.0.0
 """
 
 from pathlib import Path
@@ -38,8 +39,9 @@ STYLESHEET_PATH = (
 # Application Resources
 # --------------------------------------------------
 
-# Bundle the stylesheet into the same relative
-# directory expected by get_resource_path().
+# Bundle the stylesheet in the relative directory
+# expected by get_resource_path() in main.py.
+
 datas = [
     (
         str(STYLESHEET_PATH),
@@ -53,7 +55,7 @@ datas = [
 # --------------------------------------------------
 
 # Collect application modules to ensure they are
-# available inside the packaged executable.
+# included in the standalone executable.
 
 hiddenimports = (
     collect_submodules("ui")
@@ -91,14 +93,18 @@ pyz = PYZ(a.pure)
 
 
 # --------------------------------------------------
-# Executable
+# Single Executable
 # --------------------------------------------------
+
+# Include all binaries and application resources
+# directly in the executable.
 
 exe = EXE(
     pyz,
     a.scripts,
+    a.binaries,
+    a.datas,
     [],
-    exclude_binaries=True,
     name=APP_NAME,
     debug=False,
     bootloader_ignore_signals=False,
@@ -106,18 +112,4 @@ exe = EXE(
     upx=False,
     console=False,
     disable_windowed_traceback=False,
-)
-
-
-# --------------------------------------------------
-# Distribution Folder
-# --------------------------------------------------
-
-coll = COLLECT(
-    exe,
-    a.binaries,
-    a.datas,
-    strip=False,
-    upx=False,
-    name=APP_NAME,
 )
